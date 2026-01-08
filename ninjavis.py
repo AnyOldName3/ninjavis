@@ -74,7 +74,7 @@ def generate_build_profile(logfile: str, time_offset: int) -> List[dict]:
         log_version = re.search(r"# ninja log v(\d+)", header)
         if log_version:
             parsed_version = log_version.group(1)
-            if int(parsed_version) != 5:
+            if int(parsed_version) < 5 or int(parsed_version) > 7:
                 raise RuntimeError(f"unsupported log file version: {parsed_version}")
         else:
             # header is a log entry
