@@ -20,8 +20,7 @@ TIMELINE = """
     }}
   </style>
 
-  <script src="https://unpkg.com/vis-timeline@8.5.0/dist/vis-timeline-graph2d.min.js"></script>
-  <link href="https://unpkg.com/vis-timeline@8.5.0/dist/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://unpkg.com/vis-timeline@8.5.0/standalone/umd/vis-timeline-graph2d.min.js"></script>
 </head>
 <body>
 <div id="visualization"></div>
