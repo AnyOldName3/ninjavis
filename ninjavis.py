@@ -128,7 +128,7 @@ def main():
     args = get_argparser().parse_args(sys.argv[1:])
 
     try:
-        profile = generate_build_profile(args.logfile, int(getmtime(args.logfile)))
+        profile = generate_build_profile(args.logfile, int(getmtime(args.logfile) * 1000))
         generate_timeline_from(profile, args.output, args.title)
     except (RuntimeError, FileNotFoundError) as err:
         print(err, file=sys.stderr)
