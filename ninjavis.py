@@ -32,7 +32,14 @@ TIMELINE = """
   // Create a DataSet (allows two way data-binding)
   var items = new vis.DataSet({dataset});
   // Configuration for the Timeline
-  var options = {{}};
+  var options = {{
+    "margin": {{
+      "item": {{
+        "horizontal": 0,
+        "vertical": 2
+      }}
+    }}
+  }};
 
   // Create a Timeline
   var timeline = new vis.Timeline(container, items, options);
