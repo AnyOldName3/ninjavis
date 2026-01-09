@@ -71,7 +71,7 @@ def generate_build_profile(logfile: str, time_offset: int) -> List[dict]:
                     "content": basename(command),
                     "start": int(start_time) + time_offset,
                     "end": int(end_time) + time_offset,
-                    "title": command,
+                    "title": f"{int(end_time) - int(start_time)}ms {command}",
                 }
         except ValueError:
             print(f"error: could not parse {line}", file=sys.stderr)
