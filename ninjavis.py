@@ -6,7 +6,7 @@ import argparse
 import math
 import re
 import sys
-from os.path import getmtime
+from os.path import basename, getmtime
 from typing import List, Optional
 
 TIMELINE = """
@@ -68,9 +68,10 @@ def generate_build_profile(logfile: str, time_offset: int) -> List[dict]:
             if line[:1] != "#":
                 start_time, end_time, _, command, _ = line.split()
                 return {
-                    "content": command,
+                    "content": basename(command),
                     "start": int(start_time) + time_offset,
                     "end": int(end_time) + time_offset,
+                    "title": command,
                 }
         except ValueError:
             print(f"error: could not parse {line}", file=sys.stderr)
