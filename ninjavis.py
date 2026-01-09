@@ -3,6 +3,7 @@
 # :copyright: (c) 2019-2020 Guilhem Charles. All rights reserved.
 """Generate visualization of a ninja build from its logs."""
 import argparse
+import math
 import re
 import sys
 from os.path import getmtime
@@ -38,7 +39,9 @@ TIMELINE = """
         "horizontal": 0,
         "vertical": 2
       }}
-    }}
+    }},
+    "max": {maxTime},
+    "min": {minTime}
   }};
 
   // Create a Timeline
@@ -102,8 +105,15 @@ def generate_timeline_from(profile: List[dict], output: str, title: str):
     :return:
     """
     try:
+        minTime = math.inf
+        maxTime = -math.inf
+        for node in profile:
+            minTime = min(minTime, node["start"])
+            maxTime = max(maxTime, node["end"])
+        minTime -= 1000
+        maxTime += 1000
         with open(output, "w") as visualization:
-            visualization.write(TIMELINE.format(title=title, dataset=profile))
+            visualization.write(TIMELINE.format(title=title, dataset=profile, minTime=minTime, maxTime=maxTime))
     except RuntimeError as exc:
         print(f"error: could not generate timeline: {exc}", file=sys.stderr)
         sys.exit(1)
