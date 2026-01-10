@@ -72,6 +72,7 @@ def generate_build_profile(logfile: str, time_offset: int) -> List[dict]:
                     "start": int(start_time) + time_offset,
                     "end": int(end_time) + time_offset,
                     "title": f"{int(end_time) - int(start_time)}ms {command}",
+                    "command": command,
                 }
         except ValueError:
             print(f"error: could not parse {line}", file=sys.stderr)
@@ -93,7 +94,13 @@ def generate_build_profile(logfile: str, time_offset: int) -> List[dict]:
                 profile = [parsed_project]
         # handle remaining lines, filter out entries that could not be parsed
         profile.extend(filter(None, (parse_build_entry(line) for line in build_log)))
-        return profile
+        outputs = set()
+        dedupedProfile = list()
+        for entry in reversed(profile):
+            if not entry["command"] in outputs:
+                outputs.add(entry["command"])
+                dedupedProfile.append(entry)
+        return dedupedProfile
 
 
 def generate_timeline_from(profile: List[dict], output: str, title: str):
